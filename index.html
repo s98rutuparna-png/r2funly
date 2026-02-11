@@ -10,7 +10,7 @@
 body{
   margin:0;
   font-family:Poppins,sans-serif;
-  background:linear-gradient(160deg,#0f0c29,#302b63,#24243e);
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
   height:100vh;
   display:flex;
   justify-content:center;
@@ -21,92 +21,97 @@ body{
 
 .container{
   text-align:center;
-  max-width:700px;
+  max-width:650px;
+  position:relative;
 }
 
 .slide{
   position:absolute;
+  width:100%;
   opacity:0;
-  transform:scale(1.2);
-  transition:1s;
+  transform:translateX(40px) scale(0.95);
+  transition:0.8s;
   pointer-events:none;
 }
 
 .active{
   opacity:1;
-  transform:scale(1);
+  transform:translateX(0) scale(1);
   pointer-events:auto;
 }
 
 h1{
-  font-size:38px;
-  text-shadow:0 0 20px rgba(255,255,255,0.6);
+  font-size:34px;
 }
 
 p{
   font-size:22px;
-  opacity:0.9;
 }
 
 button{
-  padding:14px 28px;
+  padding:14px 26px;
   font-size:18px;
   border:none;
   border-radius:30px;
-  margin:12px;
+  margin:10px;
   cursor:pointer;
-  transition:0.3s;
 }
 
 #yes{
-  background:#00c853;
+  background:#4CAF50;
   color:white;
 }
 
 #no{
-  background:#d50000;
+  background:#f44336;
   color:white;
+  position:absolute;
 }
 
-.fadeout{
-  animation:bye 2s forwards;
+.fade{
+  animation:fadeout 1.5s forwards;
 }
 
-@keyframes bye{
-  to{opacity:0; transform:scale(0.3);}
+@keyframes fadeout{
+  to{opacity:0; transform:scale(0.7);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Music -->
+<!-- 🎹 Piano Music -->
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/02/23/audio_d1718ab41b.mp3">
 </audio>
 
 <div class="container" id="box">
 
+<!-- Slide 1 -->
 <div class="slide active">
 <h1>Why you should hire me as your date?</h1>
-<p>Tap to begin</p>
+<p>(tap anywhere)</p>
 </div>
 
+<!-- Slide 2 -->
 <div class="slide">
 <h1>Reason 1</h1>
-<p>You are pretty…<br>but I can sing about how pretty you are.</p>
+<p>You are pretty,<br>but I can sing about how pretty you are.</p>
 </div>
 
+<!-- Slide 3 -->
 <div class="slide">
 <h1>Reason 2</h1>
-<p>You are smart…<br>but I can make you smile even on bad days.</p>
+<p>You are smart,<br>but I can make you smile even on bad days.</p>
 </div>
 
+<!-- Slide 4 -->
 <div class="slide">
 <h1>Reason 3</h1>
-<p>I might be a paglait<br>but I am more entertaining than Netflix.</p>
+<p>I might be a paglait,<br>but I am more entertaining than Netflix.</p>
 </div>
 
+<!-- Final Slide -->
 <div class="slide">
 <h1>So would you like to go out on dinner with me?</h1>
 <button id="yes">YES</button>
@@ -120,40 +125,33 @@ button{
 let slides=document.querySelectorAll(".slide");
 let i=0;
 
-// Slide control + music start
+// Slide change + music start
 document.body.addEventListener("click",()=>{
- document.getElementById("music").play();
+  document.getElementById("music").play();
 
- if(i<slides.length-1){
-  slides[i].classList.remove("active");
-  i++;
-  slides[i].classList.add("active");
- }
+  if(i<slides.length-1){
+    slides[i].classList.remove("active");
+    i++;
+    slides[i].classList.add("active");
+  }
 });
 
-// Buttons
+// YES button
 let yes=document.getElementById("yes");
-let no=document.getElementById("no");
 let msg=document.getElementById("msg");
-let box=document.getElementById("box");
-let noCount=0;
-
 yes.onclick=(e)=>{
- e.stopPropagation();
- msg.innerHTML="Best decision ever.";
-}
+  e.stopPropagation();
+  msg.innerHTML="Here is a song for you.";
+};
 
-no.onclick=(e)=>{
- e.stopPropagation();
- noCount++;
-
- yes.style.transform=`scale(${1+noCount*0.4})`;
-
- if(noCount>=3){
-  msg.innerHTML="Ok I will vanish now.";
-  box.classList.add("fadeout");
- }
-}
+// NO button escape 😈
+let no=document.getElementById("no");
+no.onmouseover=()=>{
+  let x=Math.random()*80;
+  let y=Math.random()*80;
+  no.style.left=x+"%";
+  no.style.top=y+"%";
+};
 </script>
 
 </body>
