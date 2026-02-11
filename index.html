@@ -21,6 +21,7 @@ body{
 
 .container{
   text-align:center;
+  width:90%;
   max-width:650px;
   position:relative;
 }
@@ -29,24 +30,19 @@ body{
   position:absolute;
   width:100%;
   opacity:0;
-  transform:translateX(40px) scale(0.95);
-  transition:0.8s;
+  transform:translateX(30px);
+  transition:0.7s;
   pointer-events:none;
 }
 
 .active{
   opacity:1;
-  transform:translateX(0) scale(1);
+  transform:translateX(0);
   pointer-events:auto;
 }
 
-h1{
-  font-size:34px;
-}
-
-p{
-  font-size:22px;
-}
+h1{font-size:32px;}
+p{font-size:20px;}
 
 button{
   padding:14px 26px;
@@ -55,25 +51,34 @@ button{
   border-radius:30px;
   margin:10px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-#yes{
-  background:#4CAF50;
-  color:white;
-}
-
-#no{
-  background:#f44336;
-  color:white;
-  position:absolute;
-}
+#yes{background:#4CAF50;color:white;}
+#no{background:#f44336;color:white;}
 
 .fade{
   animation:fadeout 1.5s forwards;
 }
 
 @keyframes fadeout{
-  to{opacity:0; transform:scale(0.7);}
+  to{opacity:0; transform:scale(0.6);}
+}
+
+/* Floating hearts */
+.heart{
+  position:fixed;
+  bottom:-10px;
+  font-size:18px;
+  opacity:0.7;
+  animation:floatUp 6s linear forwards;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -87,31 +92,26 @@ button{
 
 <div class="container" id="box">
 
-<!-- Slide 1 -->
 <div class="slide active">
 <h1>Why you should hire me as your date?</h1>
 <p>(tap anywhere)</p>
 </div>
 
-<!-- Slide 2 -->
 <div class="slide">
 <h1>Reason 1</h1>
 <p>You are pretty,<br>but I can sing about how pretty you are.</p>
 </div>
 
-<!-- Slide 3 -->
 <div class="slide">
 <h1>Reason 2</h1>
 <p>You are smart,<br>but I can make you smile even on bad days.</p>
 </div>
 
-<!-- Slide 4 -->
 <div class="slide">
 <h1>Reason 3</h1>
 <p>I might be a paglait,<br>but I am more entertaining than Netflix.</p>
 </div>
 
-<!-- Final Slide -->
 <div class="slide">
 <h1>So would you like to go out on dinner with me?</h1>
 <button id="yes">YES</button>
@@ -139,19 +139,41 @@ document.body.addEventListener("click",()=>{
 // YES button
 let yes=document.getElementById("yes");
 let msg=document.getElementById("msg");
+let box=document.getElementById("box");
+
 yes.onclick=(e)=>{
   e.stopPropagation();
   msg.innerHTML="Here is a song for you.";
 };
 
-// NO button escape 😈
+// NO button logic
 let no=document.getElementById("no");
-no.onmouseover=()=>{
-  let x=Math.random()*80;
-  let y=Math.random()*80;
-  no.style.left=x+"%";
-  no.style.top=y+"%";
+let noCount=0;
+
+no.onclick=(e)=>{
+  e.stopPropagation();
+  noCount++;
+
+  if(noCount<=3){
+    let scale=1+(noCount*0.4);
+    yes.style.transform=`scale(${scale})`;
+  }
+
+  if(noCount===3){
+    msg.innerHTML="I am sad, I will vanish now.";
+    box.classList.add("fade");
+  }
 };
+
+// Floating hearts (light amount)
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},2000);
 </script>
 
 </body>
