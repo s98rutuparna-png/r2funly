@@ -9,8 +9,8 @@
 <style>
 body{
   margin:0;
-  font-family:Poppins, sans-serif;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(160deg,#0f0c29,#302b63,#24243e);
   height:100vh;
   display:flex;
   justify-content:center;
@@ -21,74 +21,90 @@ body{
 
 .container{
   text-align:center;
-  max-width:600px;
+  max-width:700px;
 }
 
 .slide{
-  display:none;
-  animation:fade 0.6s ease;
+  position:absolute;
+  opacity:0;
+  transform:scale(1.2);
+  transition:1s;
+  pointer-events:none;
 }
 
-.active{display:block;}
-
-@keyframes fade{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+.active{
+  opacity:1;
+  transform:scale(1);
+  pointer-events:auto;
 }
 
-h1{font-size:34px;}
-p{font-size:22px;}
+h1{
+  font-size:38px;
+  text-shadow:0 0 20px rgba(255,255,255,0.6);
+}
+
+p{
+  font-size:22px;
+  opacity:0.9;
+}
 
 button{
-  padding:12px 25px;
+  padding:14px 28px;
   font-size:18px;
   border:none;
-  border-radius:25px;
-  margin:10px;
+  border-radius:30px;
+  margin:12px;
   cursor:pointer;
   transition:0.3s;
 }
 
-#yes{background:#4CAF50;color:white;}
-#no{background:#ff5252;color:white;}
+#yes{
+  background:#00c853;
+  color:white;
+}
+
+#no{
+  background:#d50000;
+  color:white;
+}
 
 .fadeout{
-  animation:bye 1.5s forwards;
+  animation:bye 2s forwards;
 }
 
 @keyframes bye{
-  to{opacity:0; transform:scale(0.5);}
+  to{opacity:0; transform:scale(0.3);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 Background Music -->
+<!-- Music -->
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-background-112191.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3">
 </audio>
 
 <div class="container" id="box">
 
 <div class="slide active">
 <h1>Why you should hire me as your date?</h1>
-<p>(tap anywhere)</p>
+<p>Tap to begin</p>
 </div>
 
 <div class="slide">
 <h1>Reason 1</h1>
-<p>You are pretty…<br>but I can write songs about how pretty you are.</p>
+<p>You are pretty…<br>but I can sing about how pretty you are.</p>
 </div>
 
 <div class="slide">
 <h1>Reason 2</h1>
-<p>You are smart…<br>but I can still make you laugh on your worst days.</p>
+<p>You are smart…<br>but I can make you smile even on bad days.</p>
 </div>
 
 <div class="slide">
 <h1>Reason 3</h1>
-<p>I might be a paglait but I am more entertaining than Netflix.</p>
+<p>I might be a paglait<br>but I am more entertaining than Netflix.</p>
 </div>
 
 <div class="slide">
@@ -104,7 +120,7 @@ button{
 let slides=document.querySelectorAll(".slide");
 let i=0;
 
-// play music on first click (browser rule)
+// Slide control + music start
 document.body.addEventListener("click",()=>{
  document.getElementById("music").play();
 
@@ -113,8 +129,9 @@ document.body.addEventListener("click",()=>{
   i++;
   slides[i].classList.add("active");
  }
-},{once:false});
+});
 
+// Buttons
 let yes=document.getElementById("yes");
 let no=document.getElementById("no");
 let msg=document.getElementById("msg");
@@ -129,7 +146,8 @@ yes.onclick=(e)=>{
 no.onclick=(e)=>{
  e.stopPropagation();
  noCount++;
- yes.style.transform=`scale(${1+noCount*0.3})`;
+
+ yes.style.transform=`scale(${1+noCount*0.4})`;
 
  if(noCount>=3){
   msg.innerHTML="Ok I will vanish now.";
