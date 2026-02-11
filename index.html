@@ -2,119 +2,181 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Date Pitch 😄</title>
+<title>Date Invite 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
-  }
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:white;
+}
 
-  .page {
-    display: none;
-    font-size: 28px;
-    padding: 20px;
-    cursor: pointer;
-  }
+.container{
+  text-align:center;
+  max-width:600px;
+}
 
-  .active {
-    display: block;
-  }
+.slide{
+  display:none;
+  animation:fade 0.6s ease;
+}
 
-  button {
-    padding: 12px 25px;
-    font-size: 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+.active{display:block;}
 
-  #yesBtn {
-    background: #4CAF50;
-    color: white;
-    transition: 0.3s;
-  }
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-  #noBtn {
-    background: #f44336;
-    color: white;
-  }
+h1{
+  font-weight:600;
+  font-size:34px;
+}
 
-  .fade-out {
-    animation: fade 1.5s forwards;
-  }
+p{
+  font-size:22px;
+}
 
-  @keyframes fade {
-    to { opacity: 0; transform: scale(0.8); }
-  }
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  margin:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+#yes{
+  background:#4CAF50;
+  color:white;
+}
+
+#no{
+  background:#ff5252;
+  color:white;
+}
+
+.heart{
+  position:absolute;
+  color:#ffdde1;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+.fadeout{
+  animation:bye 1.5s forwards;
+}
+
+@keyframes bye{
+  to{opacity:0; transform:scale(0.5);}
+}
 </style>
 </head>
 
 <body>
 
-<div id="container">
+<div class="container" id="box">
 
-  <div class="page active">Why you should hire me as your date ?<br><br>(click)</div>
+<div class="slide active">
+<h1>Why you should hire me as your date? 😉</h1>
+<p>(tap anywhere)</p>
+</div>
 
-  <div class="page">Reason 1: You are pretty but I can sing about how pretty you are.<br><br>(click)</div>
+<div class="slide">
+<h1>Reason 1</h1>
+<p>You are pretty…<br>but I can write songs about how pretty you are 🎵</p>
+</div>
 
-  <div class="page">Reason 2: You are smart but I can make you smile even at your bad days.<br><br>(click)</div>
+<div class="slide">
+<h1>Reason 2</h1>
+<p>You are smart…<br>but I can still make you laugh on your worst days 😊</p>
+</div>
 
-  <div class="page">Reason 3: Life is already a movie, but with me it becomes a rom-com with good food and zero boring scenes.<br><br>(click)</div>
+<div class="slide">
+<h1>Reason 3</h1>
+<p>Life is already a journey,<br>but with me it comes with food, fun, and zero boring moments 🍕✨</p>
+</div>
 
-  <div class="page" id="finalPage" style="cursor:default;">
-    So would you like to go out on a dinner with me ? ❤️<br><br>
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-    <p id="message"></p>
-  </div>
+<div class="slide">
+<h1>Dinner with me? 🍽️💖</h1>
+<button id="yes">YES 😍</button>
+<button id="no">No 🙈</button>
+<p id="msg"></p>
+</div>
 
 </div>
 
 <script>
-  const pages = document.querySelectorAll(".page");
-  let current = 0;
+let slides=document.querySelectorAll(".slide");
+let i=0;
 
-  // Page switching
-  pages.forEach((page, index) => {
-    page.addEventListener("click", () => {
-      if(index === current && current < pages.length - 1){
-        pages[current].classList.remove("active");
-        current++;
-        pages[current].classList.add("active");
-      }
-    });
-  });
+document.body.onclick=()=>{
+ if(i<slides.length-1){
+  slides[i].classList.remove("active");
+  i++;
+  slides[i].classList.add("active");
+ }
+}
 
-  // Yes/No logic
-  let noClicks = 0;
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
-  const message = document.getElementById("message");
-  const container = document.getElementById("container");
+let yes=document.getElementById("yes");
+let no=document.getElementById("no");
+let msg=document.getElementById("msg");
+let box=document.getElementById("box");
+let noCount=0;
 
-  yesBtn.onclick = () => {
-    message.innerText = "Yay! Best decision ever 😄🍽️";
-  };
+yes.onclick=(e)=>{
+ e.stopPropagation();
+ msg.innerHTML="Best decision ever 😌💖";
+ confetti();
+}
 
-  noBtn.onclick = () => {
-    noClicks++;
-    let size = 20 + (noClicks * 10);
-    yesBtn.style.fontSize = size + "px";
+no.onclick=(e)=>{
+ e.stopPropagation();
+ noCount++;
+ yes.style.transform=`scale(${1+noCount*0.3})`;
 
-    if(noClicks >= 3){
-      message.innerText = "ok I will vanish now...";
-      container.classList.add("fade-out");
-    }
-  };
+ if(noCount>=3){
+  msg.innerHTML="Ok… I’ll vanish now 🥲";
+  box.classList.add("fadeout");
+ }
+}
+
+// floating hearts
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="💖";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=(15+Math.random()*25)+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),6000);
+},500);
+
+// simple confetti
+function confetti(){
+ for(let j=0;j<80;j++){
+  let c=document.createElement("div");
+  c.className="heart";
+  c.innerHTML="🎉";
+  c.style.left=Math.random()*100+"vw";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),3000);
+ }
+}
 </script>
 
 </body>
