@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Date Invite 💖</title>
+<title>Date Invite</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
@@ -36,14 +36,8 @@ body{
   to{opacity:1; transform:translateY(0);}
 }
 
-h1{
-  font-weight:600;
-  font-size:34px;
-}
-
-p{
-  font-size:22px;
-}
+h1{font-size:34px;}
+p{font-size:22px;}
 
 button{
   padding:12px 25px;
@@ -55,27 +49,8 @@ button{
   transition:0.3s;
 }
 
-#yes{
-  background:#4CAF50;
-  color:white;
-}
-
-#no{
-  background:#ff5252;
-  color:white;
-}
-
-.heart{
-  position:absolute;
-  color:#ffdde1;
-  font-size:20px;
-  animation:float 6s linear infinite;
-}
-
-@keyframes float{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-10vh);}
-}
+#yes{background:#4CAF50;color:white;}
+#no{background:#ff5252;color:white;}
 
 .fadeout{
   animation:bye 1.5s forwards;
@@ -89,32 +64,37 @@ button{
 
 <body>
 
+<!-- 🎵 Background Music -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-background-112191.mp3">
+</audio>
+
 <div class="container" id="box">
 
 <div class="slide active">
-<h1>Why you should hire me as your date? 😉</h1>
+<h1>Why you should hire me as your date?</h1>
 <p>(tap anywhere)</p>
 </div>
 
 <div class="slide">
 <h1>Reason 1</h1>
-<p>You are pretty…<br>but I can write songs about how pretty you are 🎵</p>
+<p>You are pretty…<br>but I can write songs about how pretty you are.</p>
 </div>
 
 <div class="slide">
 <h1>Reason 2</h1>
-<p>You are smart…<br>but I can still make you laugh on your worst days 😊</p>
+<p>You are smart…<br>but I can still make you laugh on your worst days.</p>
 </div>
 
 <div class="slide">
 <h1>Reason 3</h1>
-<p>Life is already a journey,<br>but with me it comes with food, fun, and zero boring moments 🍕✨</p>
+<p>I might be a paglait but I am more entertaining than Netflix.</p>
 </div>
 
 <div class="slide">
-<h1>Dinner with me? 🍽️💖</h1>
-<button id="yes">YES 😍</button>
-<button id="no">No 🙈</button>
+<h1>So would you like to go out on dinner with me?</h1>
+<button id="yes">YES</button>
+<button id="no">No</button>
 <p id="msg"></p>
 </div>
 
@@ -124,13 +104,16 @@ button{
 let slides=document.querySelectorAll(".slide");
 let i=0;
 
-document.body.onclick=()=>{
+// play music on first click (browser rule)
+document.body.addEventListener("click",()=>{
+ document.getElementById("music").play();
+
  if(i<slides.length-1){
   slides[i].classList.remove("active");
   i++;
   slides[i].classList.add("active");
  }
-}
+},{once:false});
 
 let yes=document.getElementById("yes");
 let no=document.getElementById("no");
@@ -140,8 +123,7 @@ let noCount=0;
 
 yes.onclick=(e)=>{
  e.stopPropagation();
- msg.innerHTML="Best decision ever 😌💖";
- confetti();
+ msg.innerHTML="Best decision ever.";
 }
 
 no.onclick=(e)=>{
@@ -150,31 +132,8 @@ no.onclick=(e)=>{
  yes.style.transform=`scale(${1+noCount*0.3})`;
 
  if(noCount>=3){
-  msg.innerHTML="Ok… I’ll vanish now 🥲";
+  msg.innerHTML="Ok I will vanish now.";
   box.classList.add("fadeout");
- }
-}
-
-// floating hearts
-setInterval(()=>{
- let h=document.createElement("div");
- h.className="heart";
- h.innerHTML="💖";
- h.style.left=Math.random()*100+"vw";
- h.style.fontSize=(15+Math.random()*25)+"px";
- document.body.appendChild(h);
- setTimeout(()=>h.remove(),6000);
-},500);
-
-// simple confetti
-function confetti(){
- for(let j=0;j<80;j++){
-  let c=document.createElement("div");
-  c.className="heart";
-  c.innerHTML="🎉";
-  c.style.left=Math.random()*100+"vw";
-  document.body.appendChild(c);
-  setTimeout(()=>c.remove(),3000);
  }
 }
 </script>
